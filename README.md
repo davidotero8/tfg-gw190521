@@ -39,7 +39,7 @@ Este trabajo responde con **inferencia bayesiana**: se compara, para cada hipót
 
 ## Reproducibilidad y diferencias con la memoria
 
-Los cuadernos recalculan todos los factores con una versión revisada y comentada del código del análisis. Casi todo coincide con la memoria; hay tres diferencias que conviene tener presentes:
+Los cuadernos recalculan todos los factores con una versión revisada y comentada del código del análisis. Casi todo coincide con la memoria; hay algunas diferencias que conviene tener presentes (resaltadas en la tabla):
 
 | Magnitud | Memoria | Recalculado aquí | Comentario |
 |---|---|---|---|
