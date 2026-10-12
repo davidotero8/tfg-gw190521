@@ -1,0 +1,9 @@
+numpy>=1.26
+scipy>=1.13
+matplotlib>=3.9
+astropy>=6.1
+corner>=2.2
+jupyterlab>=4.0
+# Solo para scripts/prepare_data.py (regenerar los datos reducidos):
+h5py>=3.11
+pandas>=2.2

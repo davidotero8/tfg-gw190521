@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Archivos originales pesados (se descargan aparte, ver data/README.md)
+*.h5
+data/raw/
+
+# Sistema
+.DS_Store
+Thumbs.db
