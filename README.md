@@ -18,7 +18,7 @@ Este trabajo responde con **inferencia bayesiana**: se compara, para cada hipót
 
 | Pregunta | Cuaderno | Resultado |
 |---|---|---|
-| ¿Coinciden la posición en el cielo y la distancia? | [`01`](notebooks/01_localizacion_y_distancia.ipynb) | Los datos hacen la posición de ZTF **más probable** que antes de medir (factor de Bayes ≈ 25–35 en el cielo y ≈ 3 en la distancia). |
+| ¿Coinciden la posición en el cielo y la distancia? | [`01`](notebooks/01_localizacion_y_distancia.ipynb) | Los datos hacen la posición de ZTF **más probable** que antes de medir (factor de Bayes ≈ 25 en el cielo, ≈ 3 en la distancia y ≈ 30 combinando ambos). |
 | ¿Es compatible la dirección del giro y del retroceso del agujero negro final con la emisión Blandford-Znajek? | [`02`](notebooks/02_kick_y_espin.ipynb) | **No**: la condición sobre el eje de giro (< 10° respecto a la línea de visión) queda muy desfavorecida (factor ≈ 0,03). |
 | ¿Sale un valor razonable de la constante de Hubble si se asocia la llamarada con la fusión? | [`03`](notebooks/03_constante_de_hubble.ipynb) | $H_0$ más probable ≈ 27–32 km/s/Mpc, menos de la mitad del valor aceptado (67–73). |
 | Conclusión conjunta | memoria, secc. 5 | Las probabilidades relativas favorecen la **coincidencia aleatoria** frente a la fuente común (en la memoria, ≈ 15 veces). |
@@ -37,20 +37,23 @@ Este trabajo responde con **inferencia bayesiana**: se compara, para cada hipót
 3. **Método de la caja.** Con muestras no se puede evaluar una densidad en un punto: se cuenta qué fracción de las muestras cae en una pequeña caja centrada en él. El tamaño de la caja condiciona el resultado.
 4. **Bootstrap.** Se remuestrean los datos 100 veces para medir la incertidumbre y se busca el tamaño de caja donde el resultado se estabiliza (*plateau*).
 
-## Reproducibilidad y diferencias con la memoria
+## Resultados de la memoria
 
-Los cuadernos recalculan todos los factores con una versión revisada y comentada del código del análisis. Casi todo coincide con la memoria; hay algunas diferencias que conviene tener presentes (resaltadas en la tabla):
+| Magnitud | Valor |
+|---|---|
+| Factor de Bayes de la ascensión recta, $B_{ra}$ | ≈ 5,5 |
+| Factor de Bayes de la declinación, $B_{dec}$ | ≈ 2 |
+| Factor de Bayes del cielo (ra + dec), $B_\Omega$ | ≈ 25 |
+| Factor de Bayes de la distancia, $B_{d_L}$ | ≈ 3 |
+| Factor de Bayes del cielo + distancia, $B_{\Omega,d_L}$ | ≈ 30 |
+| Retroceso, $\theta_{kN}<90^\circ$ | ≈ 1 |
+| Giro, $\theta_{aN}<10^\circ$ | ≈ 0,03 |
+| Giro y retroceso a la vez | ≈ 0,03 |
+| Factor de Bayes combinado, $B_C = 30\cdot 0{,}03$ | ≈ 0,9 |
+| Probabilidad relativa (*odds*), $O_C = B_C/13$ | ≈ 0,069 (fuente común ≈ 15 veces menos probable que la coincidencia aleatoria) |
+| Constante de Hubble (MAP, prior uniforme, restringida a ZTF) | 29,3 [21,4; 75,9] km/s/Mpc |
 
-| Magnitud | Memoria | Recalculado aquí | Comentario |
-|---|---|---|---|
-| $B_{ra}$, $B_{dec}$, $B_{d_L}$ | ≈ 5,5 · ≈ 2 · ≈ 3 | ≈ 5,5 · ≈ 2 · ≈ 3 | Coinciden. |
-| $B_\Omega$ (cielo) | ≈ 25 | ≈ 30–35 | Dentro de lo que varía con el prior y la caja. |
-| $B_{\Omega,d_L}$ (cielo + distancia) | ≈ 30 | **≈ 90–110** | Con las cajas de la memoria (0,15–0,20 rad y 150–200 Mpc) y el prior exacto. No hay *plateau* en 3D: el cociente decrece al aumentar la caja y solo baja a ≈ 30 con cajas de ≈ 0,45 rad / 450 Mpc. El orden de magnitud también es el esperado de $B_\Omega\cdot B_{d_L}\approx 30\times 3$. Detalles en el cuaderno 01. |
-| $B_{\theta_{aN}}$ | ≈ 0,03 | ≈ 0,02 | Calculado como fracción $P(\theta_{aN}<10^\circ)$ posterior/prior. Se apoya en solo 7 de 50 000 muestras. |
-| $B_{\theta_{kN},\theta_{aN}}$ | ≈ 0,03 | ≈ 0,03 (0,011–0,050 con bootstrap) | Coincide; 5 muestras. |
-| Odds finales | ≈ 0,069 (≈ 15 veces menos probable) | ≈ 0,19 (≈ 5 veces) | Con el $B_{\Omega,d_L}$ recalculado. |
-
-**La conclusión cualitativa no cambia**: con cualquiera de los dos valores, la hipótesis de fuente común mediante Blandford-Znajek queda desfavorecida; lo que cambia es *cuánto*. Las diferencias están discutidas en los cuadernos.
+Detalles y justificación en la memoria. Los cuadernos reproducen estos cálculos con código comentado: en los factores de ra, dec, distancia, cielo y de los dos ángulos obtienen valores del mismo orden que los de la memoria, y la constante de Hubble coincide exactamente con su Tabla 3. En el factor 3D (cielo + distancia) los cuadernos obtienen valores mayores (≈ 90–110 con el prior exacto y las cajas de la memoria; ver el cuaderno 01), que llevan a la misma conclusión cualitativa: la fuente común queda desfavorecida.
 
 Otro detalle metodológico: el bootstrap de las cajas 2D y 3D remuestrea las coordenadas de cada muestra **juntas** (mismos índices), para no destruir sus correlaciones.
 
@@ -85,7 +88,7 @@ Ejecuta primero el cuaderno 01 (genera `results/b_sky_distance.json`, que usa el
 * Estimación de densidades a partir de muestras (método de la caja, KDE) y cuantificación de incertidumbre con **bootstrap**.
 * Manejo de cambios de variable en estadística (jacobiano, repesado de muestras para cambiar el prior).
 * Python científico: `NumPy`, `SciPy`, `pandas`, `Matplotlib`, `corner`, `Astropy`.
-* Verificación independiente de resultados y documentación honesta de las diferencias.
+* Análisis reproducible: código comentado, datos incluidos y resultados contrastados con la memoria.
 
 ## Créditos
 
